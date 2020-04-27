@@ -1,6 +1,4 @@
 """Alien Invasion 2D Pygame game from Part II."""
-#fuck u git added more stuff i am coding ok ok ok 
-# i am on my work computer now
 
 import sys
 import pygame
@@ -101,22 +99,31 @@ class AlienInvasion:
         # Create an alien and find the number of aliens in a row.
         # Spacing between each alien is equal to one alien width.
         alien = Alien(self)
-        alien_width = alien.rect.width
+        alien_width, alien_height = alien.rect.size
         available_space_x = self.settings.screen_width - (2 * alien_width)
         # Remove remainder with // floor division operator
         number_aliens_x = available_space_x // (2 * alien_width)
 
-        # Create the first row of aliens
-        for alien_number in range(number_aliens_x):
-            self._create_alien(alien_number)
+        # Determine the number of rows of aliens that fit on the screen.
+        ship_height = self.ship.rect.height
+        available_space_y = (self.settings.screen_height - (3 * alien_height) - ship_height)
+        number_rows = available_space_y // (2 * alien_height)
 
-    def _create_alien(self, alien_number):
+        #Create the full fleet of aliens
+        # Create the first row of aliens
+        
+        for row_number in range(number_rows):
+            for alien_number in range(number_aliens_x):
+                self._create_alien(alien_number, row_number)
+
+    def _create_alien(self, alien_number, row_number):
         """Create an alien and place it in the row."""
         alien = Alien(self)
-        alien_width = alien.rect.width
+        alien_width, alien_height = alien.rect.size
         # Calculates spacing prior to setting alien.rect.x
         alien.x = alien_width + 2 * alien_width * alien_number
         alien.rect.x = alien.x
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         # Add to sprite group
         self.aliens.add(alien)
 
@@ -124,8 +131,3 @@ if __name__ == '__main__':
     # Make a game instance, and run the game. Make sure instance uses constants for pygame.
     AI = AlienInvasion()
     AI.run_game()
-
-#These are some git squash comments. 
-
-#some more changes that happened here and will change the word test from above to squash. 
-#github please please work please. 

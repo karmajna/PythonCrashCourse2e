@@ -8,6 +8,6 @@
 		}
 	],
 	"settings": {
-		"git.enabled": false,
+		"git.enabled": true,
 	}
 }
